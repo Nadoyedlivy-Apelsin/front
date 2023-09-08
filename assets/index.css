@@ -20,7 +20,14 @@ body {
     z-index: -1;
 }
 
+.left-arrow {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
 .main-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-content: center;
