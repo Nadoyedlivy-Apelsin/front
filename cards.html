@@ -16,45 +16,57 @@
             <img alt="right-arrow" class="right-arrow" src="assets/right-arrow.png">
         </a>
          <h1>GEVERSE</h1>
-        <div class="card">
-            <div class="card-top">
-                <div class="card-actions">
-                    <p class="card-number">#123456</p>
-                    <span class="card-result-button">SHOW RESULTS</span>
-                </div>
-                <p class="card-progress-number">60%</p>
-            </div>
-            <div class="card-progress-bar" >
-              <div class="card-progress-status" style="width: 60%"></div>
-            </div>
-            <div class="card-bottom">
-                <p class="card-stage" style="color: #0000005E;">GENERATION</p>
-                <p class="card-stage">VALIDATION</p>
-                <p class="card-stage" style="color: #C4C4C4;">COMPLETE</p>
-            </div>
-            <div class="card-info">
-                <p>
-                    ATGATAATCCAAATGACAAGTGGAATAAAGTTTCTTCAATATCTAGTCTTGCTTGTGATT
-TTGTTCAACTTAGAGGCAAGAGTTGCAGATTCTAACATAATAAGGTGCATAGACGAGGAG
-AGAGAAGCGCTACTTACTTTCAAAGCAAGCCTGGTGGATGAATCTGGTGTTTTGTCTTCC
-TGGGGACCAGAAGATGAGAAAAGAGATTGTTGTAAATGGACAGGACTCCGCTGTAGCAAC
-AAAACGAATCATGTGATACTGCTTGATCTTCAACCAATCGATTTTGACTCATTTCCTTTG
-AGAGGTACAATCAGCCCTGCTTTGCTTAAATTGCATGATTTAAGACATTTGAACCTTAGT
-TTCAACGACTTCAGTGGAAGTCCAATTCCTGAGTTCATTGGTTCTCTCAGCAAATTGAGA
-TACCTCGATCTCTTTGGTACTGTGTTTGCAGGGCCAATTCCTCCTCAGCTTGGAAACCTT
-TCAAGGTTACAACATCTTGACCTCGGATCTAATTATCTATTTAGTACTGGAAACCTTGAC
-TGGCTTTCTCATCTTTCTTATCTAAGATATCTTAACCTGGATGAGAGCAATCTCGCTAAT
-TCTAGTGATTGGTTTCAAGTAATTGGCAAGCTCCATTCTCTGAAAACCTTGTCCTTGCAC
-TCATGTTATCTTCCACCCGTTATTCCTTTGTCTCTTAATCACCTCAATTCTAGTACATCT
-CTTGAGACCCTTGTTCTCTCTGATAACAATCTCACTTCTTCCATATACCCTTGGTTGCCC
-AACATCAGTAGCATCTTTATTTCAATTGACCTTGGTTTTAACCAATTACAAGGTTCAATT
-CCAGAGTCTTTTCAACACATGGTTTATCTTGAACATCTCAGACTCAGTTTCAATGAACTT
-CTTGAGACCCTTGTTCTCTCTGATAACAATCTCACTTCTTCCATATACCCTTGGTTGCCC
-AACATCAGTAGCATCTTTATTTCAATTGACCTTGGTTTTAACCAATTACAAGGTTCAATT
-                </p>
-                <img src="assets/gene-example.png">
-            </div>
-        </div>
+        <div id="cardsContainer"></div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch("http://api.geverse.ru/get_generated")
+                .then(response => response.json())
+                .then(data => {
+                    let cardsHTML = '';
+                    data.forEach(item => {
+                        cardsHTML += generateCardHTML(item);
+                    });
+                    document.getElementById("cardsContainer").innerHTML = cardsHTML;
+                })
+                .catch(error => {
+                    console.error("Ошибка при получении данных:", error);
+                });
+        });
+
+        function generateCardHTML(data) {
+            const sequence = data.sequence;
+            const properties = data.properties.join(", "); // преобразовываем массив свойств в строку
+
+            return `
+                <div class="card">
+                    <div class="card-top">
+                        <div class="card-actions">
+                            <p class="card-number">#${data.id}</p>
+                            <span class="card-result-button">SHOW RESULTS</span>
+                        </div>
+                        <p class="card-progress-number">60%</p>
+                    </div>
+                    <div class="card-progress-bar" >
+                        <div class="card-progress-status" style="width: 60%"></div>
+                    </div>
+                    <div class="card-bottom">
+                        <p class="card-stage" style="color: #0000005E;">GENERATION</p>
+                        <p class="card-stage">VALIDATION</p>
+                        <p class="card-stage" style="color: #C4C4C4;">COMPLETE</p>
+                    </div>
+                    <div class="card-info">
+                        <p>${sequence}</p>
+                        <div>
+                            <img src="assets/gene-example.png">
+                            <p>${properties}</p>
+                        </div>
+
+                    </div>
+                </div>
+            `;
+        }
+    </script>
 </body>
 </html>
