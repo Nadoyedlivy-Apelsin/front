@@ -2,6 +2,8 @@
 
 Данный проект использует Docker и nginx для запуска веб-сервера с двумя страницами: index.html и cards.html.
 
+<br/>Ссылка на сервис: [http://geverse.ru/](https://inlnk.ru/VoQlRM)
+
 <br/>Ссылка на интерактивный прототип: [https://www.figma.com/proto/b03Js7TQSt8C0eodCAD0qQ/GEVERSE?type=design&node-id=103-39&t=FLLMNKXmUnRQlUhW-1&scaling=min-zoom&page-id=0%3A1&starting-point-node-id=103%3A39&mode=design](https://inlnk.ru/VoQlRM)
 
 ## Установка и запуск
